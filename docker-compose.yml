@@ -2,15 +2,18 @@ version: '3.8'
 
 services:
   minio:
-    image: bitnami/minio:2021.3.1
+    image: bitnami/minio
     container_name: minio
     env_file:
       - .env
     environment:
       MINIO_ACCESS_KEY: ${MINIO_ACCESS_KEY}
       MINIO_SECRET_KEY: ${MINIO_SECRET_KEY}
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER} # minioadmin
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD} # minioadmin
     volumes:
       - ./data/minio-persistence:/data
       - ./data/minio-persistence/certs:/certs
     ports:
-      - 9000:9000
+      - "0.0.0.0:9001:9001"
+      - "0.0.0.0:9000:9000"
